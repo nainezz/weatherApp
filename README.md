@@ -16,7 +16,7 @@
 - [ ] Show temperature, conditions and an icon on the home screen
 - [ ] Connect the search screen to the API by city name
 - [ ] Add a multi-day forecast
-- [ ] Move the API key into a config or environment file
+- [x] Move the API key out of the code into a git-ignored file
 
 ## Tech stack
 
@@ -32,11 +32,12 @@
 ```bash
 git clone https://github.com/nainezz/weatherApp.git
 cd weatherApp
+cp lib/secrets.example.dart lib/secrets.dart   # then add your API key in lib/secrets.dart
 flutter pub get
 flutter run
 ```
 
-You need your own free API key from [openweathermap.org](https://openweathermap.org/api). Requires Dart `>=2.17.6 <3.0.0`.
+You need your own free API key from [openweathermap.org](https://openweathermap.org/api). `lib/secrets.dart` is git-ignored, so your key stays on your machine. Requires Dart `>=2.17.6 <3.0.0`.
 
 ## Author
 

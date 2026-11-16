@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather/screen/search.dart';
 import 'package:http/http.dart' as http;
+import 'package:weather/secrets.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -33,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   desiredAccuracy: LocationAccuracy.high);
               print(position.latitude);
               var response = await http.get(Uri.parse(
-                  'https://api.openweathermap.org/data/2.5/weather?lat=${position.latitude}&lon=${position.longitude}&appid=a2db19caba495fd4db81fc39f35c01ec&units=metric'));
+                  'https://api.openweathermap.org/data/2.5/weather?lat=${position.latitude}&lon=${position.longitude}&appid=$openWeatherApiKey&units=metric'));
               print(response.body);
             },
             icon: const Icon(Icons.pin_drop),
