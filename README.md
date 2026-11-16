@@ -1,17 +1,43 @@
-# weather
+# 🌦️ CimiloSheeg: Weather App (Flutter)
 
-A new Flutter project.
+**CimiloSheeg** ("weather report" in Somali) is a weather app built with **Flutter**. It uses the device's location to fetch current weather from the OpenWeatherMap API.
 
-## Getting Started
+> 🚧 **Work in progress.** Location and the API call are working. The weather display and the city search are still being built.
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
+- **Dark-themed home screen** with a full-screen background image and a welcome message.
+- **Current location.** Requests location permission and gets the device's GPS position with `geolocator`.
+- **Live weather data.** Calls the OpenWeatherMap current weather API for that position, in metric units.
+- **Search screen.** A screen for searching a city or country, with a UI layout for the result.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Roadmap
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# weatherApp
+- [ ] Show temperature, conditions and an icon on the home screen
+- [ ] Connect the search screen to the API by city name
+- [ ] Add a multi-day forecast
+- [ ] Move the API key into a config or environment file
+
+## Tech stack
+
+| | |
+|---|---|
+| Framework | Flutter (Dart) |
+| Location | `geolocator` |
+| Networking | `http` |
+| Weather data | [OpenWeatherMap API](https://openweathermap.org/api) |
+
+## Getting started
+
+```bash
+git clone https://github.com/nainezz/weatherApp.git
+cd weatherApp
+flutter pub get
+flutter run
+```
+
+You need your own free API key from [openweathermap.org](https://openweathermap.org/api). Requires Dart `>=2.17.6 <3.0.0`.
+
+## Author
+
+**Nainezz**, a software engineer in Nairobi, Kenya · [GitHub](https://github.com/nainezz)
