@@ -1,5 +1,7 @@
 # 🌦️ CimiloSheeg: Weather App (Flutter)
 
+**🔗 Live demo:** https://nainezz.github.io/weatherApp/
+
 **CimiloSheeg** ("weather report" in Somali) is a weather app built with **Flutter**. It uses the device's location to fetch current weather from the OpenWeatherMap API.
 
 > 🚧 **Work in progress.** Location and the API call are working. The weather display and the city search are still being built.
