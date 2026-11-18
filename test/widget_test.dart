@@ -1,30 +1,70 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:weather/weather_service.dart';
+import 'package:weather/widgets/weather_view.dart';
 
-import 'package:weather/main.dart';
+// A trimmed OpenWeatherMap "current weather" response.
+final sample = <String, dynamic>{
+  'name': 'Nairobi',
+  'sys': {'country': 'KE'},
+  'main': {
+    'temp': 22.6,
+    'feels_like': 22.1,
+    'temp_min': 20.4,
+    'temp_max': 24.9,
+    'humidity': 56,
+  },
+  'wind': {'speed': 4.1},
+  'weather': [
+    {'description': 'broken clouds', 'icon': '04d'}
+  ],
+};
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  test('reads the weather from an API response', () {
+    final w = Weather.fromJson(sample);
+    expect(w.place, 'Nairobi');
+    expect(w.country, 'KE');
+    expect(w.temp, 22.6);
+    expect(w.humidity, 56);
+    expect(w.windSpeed, 4.1);
+    expect(w.description, 'broken clouds');
+    expect(w.iconUrl, 'https://openweathermap.org/img/wn/04d@4x.png');
+  });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  test('copes with integer values and missing optional fields', () {
+    final w = Weather.fromJson({
+      'name': 'Mogadishu',
+      'main': {
+        'temp': 30,
+        'feels_like': 33,
+        'temp_min': 30,
+        'temp_max': 30,
+        'humidity': 70,
+      },
+    });
+    expect(w.temp, 30.0);
+    expect(w.country, '');
+    expect(w.windSpeed, 0);
+    expect(w.icon, '01d');
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  test('an empty city name gives a clear message', () async {
+    expect(
+      () => WeatherService.forCity('   '),
+      throwsA(isA<WeatherException>()
+          .having((e) => e.message, 'message', 'Enter a city name.')),
+    );
+  });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  testWidgets('shows temperature, conditions and details', (tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(body: WeatherView(weather: Weather.fromJson(sample))),
+    ));
+    expect(find.text('Nairobi, KE'), findsOneWidget);
+    expect(find.text('23°C'), findsOneWidget);
+    expect(find.text('Broken clouds'), findsOneWidget);
+    expect(find.text('56%'), findsOneWidget);
+    expect(find.text('15 km/h'), findsOneWidget);
   });
 }
