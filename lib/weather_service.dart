@@ -32,9 +32,9 @@ class Weather {
 
   factory Weather.fromJson(Map<String, dynamic> json) {
     final main = json['main'] as Map<String, dynamic>;
-    final wind = (json['wind'] ?? {}) as Map<String, dynamic>;
-    final sys = (json['sys'] ?? {}) as Map<String, dynamic>;
-    final list = (json['weather'] ?? []) as List<dynamic>;
+    final wind = (json['wind'] ?? <String, dynamic>{}) as Map<String, dynamic>;
+    final sys = (json['sys'] ?? <String, dynamic>{}) as Map<String, dynamic>;
+    final list = (json['weather'] ?? <dynamic>[]) as List<dynamic>;
     final first =
         list.isNotEmpty ? list.first as Map<String, dynamic> : <String, dynamic>{};
     return Weather(
